@@ -1,2 +1,11 @@
-# learningpython
-learning python
+# Learning Python
+这是一个学习python的项目，通过实现不同的小项目，增加对python的学习
+
+## fakels
+通过实现命令ls的各种功能来熟悉，学习Python。实现ls的以下功能：  
+1. ls  
+    显示当前工作目录下的文件以及目录信息  
+2. -a  
+    显示当前工作目录下的所有文件以及目录信息，包括隐藏文件和目录  
+3. -r
+    将文件以相反次序显示
