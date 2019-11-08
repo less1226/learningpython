@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import os
-
+import re
 
 def ls(inputStr=''):
     current_path = os.getcwd()
@@ -50,8 +50,18 @@ def ls(inputStr=''):
             elif os.path.isdir(command):
                 all_list.clear()
                 all_list = os.listdir(command)
-            elif '*' in command:
-                pass
+            elif '*' in command or '?' in command:
+                r= command
+                if command.startswith(r'*'):
+                    r = r.replace(r'*',r'[0-9a-zA-Z]+')
+                r = r.replace(r'*',r'[0-9a-zA-Z]*')
+                r = r.replace(r'?', r'[0-9a-zA-Z]+')
+                r = '^%s$' % r
+                re_match = re.compile(r)
+                temp_list = [x for x in all_list if re.match(r,x)]
+                
+                print(temp_list)
+
 
 
     # 输出处理好的目录信息
