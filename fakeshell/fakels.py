@@ -3,6 +3,7 @@
 import os
 import re
 
+
 def ls(inputStr=''):
     current_path = os.getcwd()
     print('Current path is %s' % current_path)
@@ -42,7 +43,9 @@ def ls(inputStr=''):
                     size_dict[l] = 0
                 elif os.path.isfile(l):
                     size_dict[l] = os.path.getsize(l)
-            size_list = sorted(size_dict.items(), key=lambda x: x[1], reverse=True)
+            size_list = sorted(size_dict.items(),
+                            key=lambda x: x[1],
+                            reverse=True)
         else:
             if os.path.isfile(command):
                 all_list.clear()
@@ -51,18 +54,19 @@ def ls(inputStr=''):
                 all_list.clear()
                 all_list = os.listdir(command)
             elif '*' in command or '?' in command:
-                r= command
+                r = command
                 if command.startswith(r'*'):
-                    r = r.replace(r'*',r'[0-9a-zA-Z]+')
-                r = r.replace(r'*',r'[0-9a-zA-Z]*')
+                    r = r.replace(r'*', r'[0-9a-zA-Z]+')
+                r = r.replace(r'*', r'[0-9a-zA-Z]*')
                 r = r.replace(r'?', r'[0-9a-zA-Z]+')
                 r = '^%s$' % r
                 re_match = re.compile(r)
-                temp_list = [x for x in all_list if re.match(r,x)]
-                
-                print(temp_list)
+                temp_list = [x for x in all_list if re.match(r, x)]
 
-
+                all_list.clear()
+                for t in temp_list:
+                    all_list.append(os.listdir(t))
+                    all_list.append('\n')
 
     # 输出处理好的目录信息
     if '-R' in commands:
