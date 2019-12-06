@@ -10,8 +10,7 @@ class Solution(object):
                 dic[s[i]] = -1
             else:
                 dic[s[i]] = i
-        
-        li = [x for i,x in dic.items() if x != -1]
+
+        li = [x for i, x in dic.items() if x != -1]
         li.sort()
-        return li[0] if len(li) >0 else -1
-        
+        return li[0] if len(li) > 0 else -1

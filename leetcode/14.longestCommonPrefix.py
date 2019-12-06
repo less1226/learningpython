@@ -4,7 +4,7 @@ class Solution:
         conti = True
         con = 0
         compare = ""
-        
+
         while conti:
             for i in strs:
                 if i == "":
@@ -22,11 +22,10 @@ class Solution:
                     compare = ""
                     conti = False
                     break
-                
-            
+
             if compare != "":
                 returnstr = returnstr + compare
-                compare= ""
+                compare = ""
                 con += 1
             else:
                 break
