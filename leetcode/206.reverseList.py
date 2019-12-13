@@ -4,23 +4,19 @@
 #         self.val = x
 #         self.next = None
 
+
 class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
         if head == None:
             return None
-        
+
         if head.next == None:
             return head
-        
-        tempnode = head.next
-        head.next = None
-        while tempnode.next:
-            lnode = tempnode
-            tempnode = tempnode.next
-            lnode.next = head
-            head = lnode
-        
-        tempnode.next = head
-        return tempnode
-            
-            
+
+        cur = None
+        while head:
+            temphead = head.next
+            head.next = cur
+            cur, head = head, temphead
+
+        return cur
