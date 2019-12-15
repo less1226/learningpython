@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import os
 import requests
 import json
 
 _all_question_url = 'https://leetcode-cn.com/api/problems/all/'
 _question_url = 'https://leetcode-cn.com/problems/'
 _graphql_url = 'https://leetcode-cn.com/graphql/'
+_questions_content_path = os.getcwd() + '/questioncontent'
 
 _graphql_params = {
     "operationName":
@@ -36,7 +38,8 @@ class QuestionList():
     def create_list(self):
         r = requests.get(_all_question_url)
         self._question_list = [
-            i['stat'] for i in r.json()['stat_status_pairs'] if i['paid_only']==False
+            i for i in r.json()['stat_status_pairs']
+            if i['paid_only'] == False
         ]
         with open('allproblemlist.json', 'w') as fp:
             json.dump(self._question_list, fp)
@@ -44,12 +47,12 @@ class QuestionList():
     def get_question(self, **kw):
         if 'frontend_question_id' in kw:
             question__title_slug = [
-                i['question__title_slug'] for i in self._question_list
+                i['stat']['question__title_slug'] for i in self._question_list
                 if i['frontend_question_id'] == kw['frontend_question_id']
             ]
         elif 'question__title' in kw:
             question__title_slug = [
-                i['question__title_slug'] for i in self._question_list
+                i['stat']['question__title_slug'] for i in self._question_list
                 if i['question__title'] == kw['question__title']
             ]
 
@@ -58,3 +61,12 @@ class QuestionList():
         question = l.json()['data']['question']
 
         return question
+
+    def create_qusetion_files(self):
+        if not os.path.exists(_questions_content_path):
+            os.mkdir(_questions_content_path)
+            
+        for i in self._question_list:
+            title_slug = i['stat']['question__title_slug']
+            question_frontend_id = i['stat']['frontend_question_id']
+            
